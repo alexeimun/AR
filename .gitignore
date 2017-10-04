@@ -1,0 +1,12 @@
+/node_modules
+/typings
+/dist
+/.idea
+/.vscode
+src/**/*.js
+src/**/*.js.map
+.env.json
+npm-debug.log
+yarn.lock
+.DS_Store
+package-lock.json
