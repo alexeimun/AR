@@ -1,4 +1,4 @@
-var THREEx = THREEx || {}
+var THREEx = THREEx || {};
 
 // shim
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
@@ -7,29 +7,19 @@ window.URL = window.URL || window.webkitURL;
 /**
  * Grab camera
  */
-THREEx.WebcamGrabbing = function() {
+THREEx.WebcamGrabbing = function () {
 
-    //////////////////////////////////////////////////////////////////////////////////
-    //		Comments
-    //////////////////////////////////////////////////////////////////////////////////
-    // create video element
-    var domElement = document.createElement('video')
-    domElement.setAttribute('autoplay', true)
+    let domElement = document.createElement('video');
+    domElement.setAttribute('autoplay', 'true');
 
     // window.domElement = video
     domElement.style.zIndex = -1;
-    domElement.style.position = 'absolute'
+    domElement.style.position = 'absolute';
 
-    // domElement.style.top = '50%'
-    // domElement.style.left = '50%'
-    // domElement.style.marginRight = '50%'
-    // domElement.style.transform = 'translate(-50%, -50%)'
-    // domElement.style.minWidth = '100%'
-
-    domElement.style.top = '0px'
-    domElement.style.left = '0px'
-    domElement.style.width = '100%'
-    domElement.style.height = '100%'
+    domElement.style.top = '0px';
+    domElement.style.left = '0px';
+    domElement.style.width = '100%';
+    domElement.style.height = '100%';
 
     /**
      * Resize video element.
@@ -37,38 +27,18 @@ THREEx.WebcamGrabbing = function() {
      * - it is frequently when the mobile is changing orientation
      * - after a search on the internet, it seems hard/impossible to prevent browser from changing orientation
      */
-    function onResize() {
+    function onResize()
+    {
         // is the size of the video available ?
-        if (domElement.videoHeight === 0) return
+        if (domElement.videoHeight === 0)
+        {
 
-        var videoAspect = domElement.videoWidth / domElement.videoHeight
-        var windowAspect = window.innerWidth / window.innerHeight
-
-        // var video = document.querySelector('video')
-//                 if( videoAspect < windowAspect ){
-//                         domElement.style.left        = '0%'
-//                         domElement.style.width       = window.innerWidth + 'px'
-//                         domElement.style.marginLeft  = '0px'
-//
-//                         domElement.style.top         = '50%'
-//                         domElement.style.height      =  (window.innerWidth/videoAspect) + 'px'
-//                         domElement.style.marginTop   = -(window.innerWidth/videoAspect) /2 + 'px'
-// console.log('videoAspect <<<<< windowAspect')
-//                 }else{
-//                         domElement.style.top         = '0%'
-//                         domElement.style.height      = window.innerHeight+'px'
-//                         domElement.style.marginTop   =  '0px'
-//
-//                         domElement.style.left        = '50%'
-//                         domElement.style.width       =  (window.innerHeight*videoAspect) + 'px'
-//                         domElement.style.marginLeft  = -(window.innerHeight*videoAspect)/2 + 'px'
-// console.log('videoAspect >>>> windowAspect')
-//                 }
+        }
     }
 
     window.addEventListener('resize', function (event) {
         onResize()
-    })
+    });
 
     // just to be sure - resize on mobile is funky to say the least
     setInterval(function () {
@@ -76,19 +46,20 @@ THREEx.WebcamGrabbing = function() {
     }, 500);
 
     // get the media sources
-    navigator.mediaDevices.enumerateDevices().then(function (sourceInfos) {
+    navigator.mediaDevices.enumerateDevices().then(sourceInfos => {
         // define getUserMedia() constraints
-        var constraints = {
+        let constraints = {
             video: true, audio: false
         };
         // to mirror the video element when it isnt 'environment'
         // domElement.style.transform   = 'scaleX(-1)'
 
         // it it finds the videoSource 'environment', modify constraints.video
-        for (var i = 0; i !== sourceInfos.length; ++i) {
-            var sourceInfo = sourceInfos[i];
-            console.log('sourceInfo => ', sourceInfo);
-            if (sourceInfo.kind === "videoinput") {
+        for (let i = 0; i !== sourceInfos.length; ++i)
+        {
+            let sourceInfo = sourceInfos[i];
+            if (sourceInfo.kind === "videoinput")
+            {
                 constraints.video = {
                     optional: [{sourceId: sourceInfo.id}]
                 }
